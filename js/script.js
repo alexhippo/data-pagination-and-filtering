@@ -21,13 +21,14 @@ This function will create and insert/append the elements needed to display a "pa
 */
 let itemsPerPage = 9;
 function showPage(list, page) {
-   let startIndex = (page * itemsPerPage) - itemsPerPage;
-   let endIndex = page * itemsPerPage;
-   let studentList = document.querySelector('ul.student-list');
+   const startIndex = (page * itemsPerPage) - itemsPerPage;
+   const endIndex = page * itemsPerPage;
+   const studentList = document.querySelector('ul.student-list');
    studentList.innerHTML = ``;
 
    for (let i = 0; i < list.length; i++) {
       if (i >= startIndex && i < endIndex) {
+         //@todo: use insertAdjacentHTML and beforeend
          studentList.innerHTML += `
             <li class="student-item cf">
                <div class="student-details">
@@ -39,7 +40,7 @@ function showPage(list, page) {
                   <span class="date">${list[i].registered.date}</span>
                </div>
          </li>
-         `
+         `;
       }
    }
 }
@@ -48,8 +49,27 @@ function showPage(list, page) {
 Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
+function addPagination(list) {
+   const numberofPages = (list.length / 9) + 1; //index starts at 1
+   const linkList = document.querySelector('ul.link-list');
+   linkList.innerHTML = ``;
+
+   for (let i = 1; i <= numberofPages; i++) {
+      //@todo: use insertAdjacentHTML and beforeend
+      linkList.innerHTML += `
+         <li>
+            <button type="button">${i}</button>
+         </li>
+      `;
+   }
+
+   const activeButton = linkList.firstElementChild;
+   activeButton.className = 'active';
+}
+
 
 
 
 // Call functions
-showPage(data, 1);
+showPage(data, 5);
+addPagination(data);
