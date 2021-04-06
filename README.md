@@ -1,3 +1,3 @@
 # Data Pagination & Filtering
 
-This app demonstrates data pagination and filtering techniques using a database of example student records. This project was created as part of the [Treehouse Full Stack Techdegree course](https://teamtreehouse.com/techdegree/full-stack-javascript).
+This app demonstrates data pagination, filtering and DOM Manipulation techniques using a list of example student records. My project code was written in vanilla JS and not dependent on third party or external libraries. This project was created as part of the [Treehouse Full Stack Techdegree course](https://teamtreehouse.com/techdegree/full-stack-javascript).

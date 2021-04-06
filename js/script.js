@@ -82,8 +82,7 @@ header.insertAdjacentHTML('beforeend', `
 `);
 
 function searchStudents(searchInput, students) {
-   console.log('searchInput', searchInput);
-   console.log('students', students);
+
    let searchResults = [];
    for (let i = 0; i < students.length; i++) {
       if ((searchInput.length !== 0) &&
@@ -95,6 +94,18 @@ function searchStudents(searchInput, students) {
    //@todo: Sort based on relevance? or alphabetical order?
    return searchResults;
 }
+
+//listen for submit button
+const searchBar = document.querySelector('#search');
+const searchButton = searchBar.nextElementSibling;
+
+searchButton.addEventListener('click', () => {
+   showPage((searchStudents(searchBar.value, data)), 1);
+})
+
+searchBar.addEventListener('keyup', () => {
+   showPage((searchStudents(searchBar.value, data)), 1);
+})
 
 // Call functions
 showPage(data, 1);
