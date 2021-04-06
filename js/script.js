@@ -110,4 +110,3 @@ searchBar.addEventListener('keyup', () => {
 // Call functions
 showPage(data, 1);
 addPagination(data);
-console.log(searchStudents('ethel', data));
