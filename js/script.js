@@ -81,6 +81,22 @@ header.insertAdjacentHTML('beforeend', `
    </label>
 `);
 
+function searchStudents(searchInput, students) {
+   console.log('searchInput', searchInput);
+   console.log('students', students);
+   let searchResults = [];
+   for (let i = 0; i < students.length; i++) {
+      if ((searchInput.length !== 0) &&
+         (students[i].name.first.toLowerCase().includes(searchInput.toLowerCase()) ||
+            (students[i].name.last.toLowerCase().includes(searchInput.toLowerCase())))) {
+         searchResults.push(students[i]);
+      }
+   }
+   //@todo: Sort based on relevance? or alphabetical order?
+   return searchResults;
+}
+
 // Call functions
 showPage(data, 1);
 addPagination(data);
+console.log(searchStudents('ethel', data));
