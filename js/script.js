@@ -19,7 +19,7 @@ function showPage(list, page) {
    for (let i = 0; i < list.length; i++) {
       if (i >= startIndex && i < endIndex) {
          //@todo: use insertAdjacentHTML and beforeend
-         studentList.innerHTML += `
+         studentList.insertAdjacentHTML('beforeend', `
             <li class="student-item cf">
                <div class="student-details">
                   <img class="avatar" src=${list[i].picture.large} alt="Profile Picture of ${list[i].name.first} ${list[i].name.last}">
@@ -29,29 +29,27 @@ function showPage(list, page) {
                <div class="joined-details">
                   <span class="date">${list[i].registered.date}</span>
                </div>
-         </li>
-         `;
+            </li>
+         `)
       }
    }
 }
 
+const linkList = document.querySelector('ul.link-list');
 /*
 Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
-const linkList = document.querySelector('ul.link-list');
-
 function addPagination(list) {
    const numberofPages = (list.length / 9) + 1; //index starts at 1
    linkList.innerHTML = ``;
 
    for (let i = 1; i <= numberofPages; i++) {
-      //@todo: use insertAdjacentHTML and beforeend
-      linkList.innerHTML += `
+      linkList.insertAdjacentHTML('beforeend', `
          <li>
             <button type="button">${i}</button>
          </li>
-      `;
+      `);
    }
    const activeButton = linkList.firstElementChild.firstElementChild;
    activeButton.className = 'active';
@@ -69,6 +67,19 @@ linkList.addEventListener('click', (e) => {
       showPage(data, clickedButton.textContent);
    }
 })
+
+/*
+Create the Search component
+This will allow the user to search for a student in the database
+*/
+const header = document.querySelector('header');
+header.insertAdjacentHTML('beforeend', `
+   <label for="search" class="student-search">
+   <span>Search by name</span>
+   <input id="search" placeholder="Search by name...">
+   <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+   </label>
+`);
 
 // Call functions
 showPage(data, 1);
