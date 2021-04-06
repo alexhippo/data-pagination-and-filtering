@@ -5,16 +5,6 @@ Author: Alex Hipolito
 GitHub: @alexhippo
 */
 
-
-
-/*
-For assistance:
-   Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
-   Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
-*/
-
-
-
 /*
 Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
@@ -49,9 +39,10 @@ function showPage(list, page) {
 Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
+const linkList = document.querySelector('ul.link-list');
+
 function addPagination(list) {
    const numberofPages = (list.length / 9) + 1; //index starts at 1
-   const linkList = document.querySelector('ul.link-list');
    linkList.innerHTML = ``;
 
    for (let i = 1; i <= numberofPages; i++) {
@@ -62,14 +53,23 @@ function addPagination(list) {
          </li>
       `;
    }
-
-   const activeButton = linkList.firstElementChild;
+   const activeButton = linkList.firstElementChild.firstElementChild;
    activeButton.className = 'active';
 }
 
-
-
+linkList.addEventListener('click', (e) => {
+   if (e.target.tagName === 'BUTTON') {
+      const clickedButton = e.target;
+      //remove the 'active' class from any other button in the linkList
+      for (let listItem of linkList.children) {
+         let button = listItem.firstElementChild;
+         button.classList.remove('active');
+      }
+      clickedButton.className = 'active';
+      showPage(data, clickedButton.textContent);
+   }
+})
 
 // Call functions
-showPage(data, 5);
+showPage(data, 1);
 addPagination(data);
