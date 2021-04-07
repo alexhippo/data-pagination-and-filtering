@@ -14,7 +14,7 @@ function showPage(list, page) {
    const startIndex = (page * itemsPerPage) - itemsPerPage;
    const endIndex = page * itemsPerPage;
    const studentList = document.querySelector('ul.student-list');
-   studentList.innerHTML = ``;
+   studentList.innerHTML = '';
 
    for (let i = 0; i < list.length; i++) {
       if (i >= startIndex && i < endIndex) {
@@ -41,8 +41,8 @@ Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
 function addPagination(list) {
-   const numberofPages = (list.length / 9) + 1; //index starts at 1
-   linkList.innerHTML = ``;
+   const numberofPages = (list.length / itemsPerPage) + 1; //index starts at 1
+   linkList.innerHTML = '';
 
    for (let i = 1; i <= numberofPages; i++) {
       linkList.insertAdjacentHTML('beforeend', `
@@ -55,22 +55,27 @@ function addPagination(list) {
    activeButton.className = 'active';
 }
 
-linkList.addEventListener('click', (e) => {
-   if (e.target.tagName === 'BUTTON') {
-      const clickedButton = e.target;
+linkList.addEventListener('click', (event) => {
+   if (event.target.tagName === 'BUTTON') {
+      const clickedButton = event.target;
       //remove the 'active' class from any other button in the linkList
       for (let listItem of linkList.children) {
          let button = listItem.firstElementChild;
          button.classList.remove('active');
       }
       clickedButton.className = 'active';
-      showPage(data, clickedButton.textContent);
+      if (!searchBar.value) {
+         showPage(data, clickedButton.textContent);
+      } else {
+         const searchResults = searchStudents(searchBar.value, data);
+         showPage(searchResults, clickedButton.textContent);
+      }
    }
 })
 
 /*
 Create the Search component
-This will allow the user to search for a student in the database
+This will allow the user to search/filter students in the database based on name
 */
 const header = document.querySelector('header');
 header.insertAdjacentHTML('beforeend', `
@@ -82,12 +87,10 @@ header.insertAdjacentHTML('beforeend', `
 `);
 
 function searchStudents(searchInput, students) {
-
    let searchResults = [];
    for (let i = 0; i < students.length; i++) {
       if ((searchInput.length !== 0) &&
-         (students[i].name.first.toLowerCase().includes(searchInput.toLowerCase()) ||
-            (students[i].name.last.toLowerCase().includes(searchInput.toLowerCase())))) {
+         ((students[i].name.first.toLowerCase().includes(searchInput.toLowerCase())) || (students[i].name.last.toLowerCase().includes(searchInput.toLowerCase())))) {
          searchResults.push(students[i]);
       }
    }
@@ -95,18 +98,27 @@ function searchStudents(searchInput, students) {
    return searchResults;
 }
 
-//listen for submit button
 const searchBar = document.querySelector('#search');
 const searchButton = searchBar.nextElementSibling;
 
-searchButton.addEventListener('click', () => {
-   showPage((searchStudents(searchBar.value, data)), 1);
+searchButton.addEventListener('click', (event) => {
+   if (event.target.value) {
+      const searchResults = searchStudents(searchBar.value, data);
+      showPage(searchResults, 1);
+      addPagination(searchResults);
+   }
 })
 
-searchBar.addEventListener('keyup', () => {
-   showPage((searchStudents(searchBar.value, data)), 1);
+searchBar.addEventListener('keyup', (event) => {
+   if (event.target.value) {
+      const searchResults = searchStudents(searchBar.value, data);
+      showPage(searchResults, 1);
+      addPagination(searchResults);
+   }
 })
 
 // Call functions
-showPage(data, 1);
-addPagination(data);
+window.addEventListener('DOMContentLoaded', () => {
+   showPage(data, 1);
+   addPagination(data);
+})
