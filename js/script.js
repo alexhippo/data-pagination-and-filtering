@@ -104,7 +104,7 @@ const searchButton = searchBar.nextElementSibling;
 
 //@todo: Refactoring here
 searchButton.addEventListener('click', (event) => {
-   if (event.target.value) {
+   if (searchBar.value) {
       const searchResults = searchStudents(searchBar.value, data);
       if (searchResults.length > 0) {
          showPage(searchResults, 1);
