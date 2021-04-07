@@ -41,18 +41,19 @@ Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
 function addPagination(list) {
-   const numberofPages = (list.length / itemsPerPage) + 1; //index starts at 1
    linkList.innerHTML = '';
-
-   for (let i = 1; i <= numberofPages; i++) {
-      linkList.insertAdjacentHTML('beforeend', `
-         <li>
-            <button type="button">${i}</button>
-         </li>
-      `);
+   if (list.length > 0) {
+      const numberofPages = (list.length / itemsPerPage) + 1; //index starts at 1
+      for (let i = 1; i <= numberofPages; i++) {
+         linkList.insertAdjacentHTML('beforeend', `
+            <li>
+               <button type="button">${i}</button>
+            </li>
+         `);
+      }
+      const activeButton = linkList.firstElementChild.firstElementChild;
+      activeButton.className = 'active';
    }
-   const activeButton = linkList.firstElementChild.firstElementChild;
-   activeButton.className = 'active';
 }
 
 linkList.addEventListener('click', (event) => {
@@ -104,16 +105,32 @@ const searchButton = searchBar.nextElementSibling;
 searchButton.addEventListener('click', (event) => {
    if (event.target.value) {
       const searchResults = searchStudents(searchBar.value, data);
-      showPage(searchResults, 1);
-      addPagination(searchResults);
+      if (searchResults.length > 0) {
+         showPage(searchResults, 1);
+         addPagination(searchResults);
+      } else {
+         addPagination(searchResults);
+         const studentList = document.querySelector('ul.student-list');
+         studentList.innerHTML = `
+            <h1>Sorry, we couldn't find a student with that name. Please try a different search term.</h1>
+         `
+      }
    }
 })
 
 searchBar.addEventListener('keyup', (event) => {
    if (event.target.value) {
       const searchResults = searchStudents(searchBar.value, data);
-      showPage(searchResults, 1);
-      addPagination(searchResults);
+      if (searchResults.length > 0) {
+         showPage(searchResults, 1);
+         addPagination(searchResults);
+      } else {
+         addPagination(searchResults);
+         const studentList = document.querySelector('ul.student-list');
+         studentList.innerHTML = `
+            <h1>Sorry, we couldn't find a student with that name. Please try a different search term.</h1>
+         `
+      }
    }
 })
 
