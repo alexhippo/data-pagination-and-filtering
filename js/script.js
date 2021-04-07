@@ -18,7 +18,6 @@ function showPage(list, page) {
 
    for (let i = 0; i < list.length; i++) {
       if (i >= startIndex && i < endIndex) {
-         //@todo: use insertAdjacentHTML and beforeend
          studentList.insertAdjacentHTML('beforeend', `
             <li class="student-item cf">
                <div class="student-details">
@@ -68,6 +67,7 @@ linkList.addEventListener('click', (event) => {
       if (!searchBar.value) {
          showPage(data, clickedButton.textContent);
       } else {
+         //@todo: Can this call be avoided?
          const searchResults = searchStudents(searchBar.value, data);
          showPage(searchResults, clickedButton.textContent);
       }
@@ -102,6 +102,7 @@ function searchStudents(searchInput, students) {
 const searchBar = document.querySelector('#search');
 const searchButton = searchBar.nextElementSibling;
 
+//@todo: Refactoring here
 searchButton.addEventListener('click', (event) => {
    if (event.target.value) {
       const searchResults = searchStudents(searchBar.value, data);
@@ -115,6 +116,9 @@ searchButton.addEventListener('click', (event) => {
             <h1>Sorry, we couldn't find a student with that name. Please try a different search term.</h1>
          `
       }
+   } else {
+      showPage(data, 1);
+      addPagination(data);
    }
 })
 
@@ -131,6 +135,9 @@ searchBar.addEventListener('keyup', (event) => {
             <h1>Sorry, we couldn't find a student with that name. Please try a different search term.</h1>
          `
       }
+   } else {
+      showPage(data, 1);
+      addPagination(data);
    }
 })
 
