@@ -77,6 +77,7 @@ linkList.addEventListener('click', (event) => {
 /*
 Create the Search component
 This will allow the user to search/filter students in the database based on name
+If no results are found, a "No search results" style message is displayed on the page to the user.
 */
 const header = document.querySelector('header');
 header.insertAdjacentHTML('beforeend', `
@@ -95,7 +96,6 @@ function searchStudents(searchInput, students) {
          searchResults.push(students[i]);
       }
    }
-   //@todo: Sort based on relevance? or alphabetical order?
    return searchResults;
 }
 
