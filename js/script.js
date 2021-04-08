@@ -41,13 +41,17 @@ function showPage(list, page) {
 Append Search component to the Header
 */
 const header = document.querySelector('header');
-header.insertAdjacentHTML('beforeend', `
+const searchComponent = `
    <label for="search" class="student-search">
    <span>Search by name</span>
    <input id="search" placeholder="Search by name...">
    <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
    </label>
-`);
+`
+header.insertAdjacentHTML('beforeend', searchComponent);
+
+const searchBar = document.querySelector('#search');
+const searchButton = searchBar.nextElementSibling;
 
 /*
 `searchStudents` function
@@ -65,13 +69,11 @@ function searchStudents(searchInput, students) {
    return searchResults;
 };
 
-const searchBar = document.querySelector('#search');
-const searchButton = searchBar.nextElementSibling;
-
 /*
 `showSearchResults` function
 This will display and paginate the results returned by searchStudents() in the student list
-If there is no searchInput (e.g. search term was cleared by the user), the full student list will be displayed by default
+If there are no search results, a "No results found" style message will be displayed
+If there is no searchInput (e.g. search was cleared by the user), the full student list will be displayed by default
 */
 function showSearchResults(searchInput) {
    if (searchInput) {
@@ -144,4 +146,5 @@ linkList.addEventListener('click', (event) => {
    }
 });
 
+//Call functions - initialise page
 showDefaultStudentList();
