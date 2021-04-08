@@ -112,7 +112,7 @@ This function will create and insert/append the elements needed for the paginati
 function addPagination(list) {
    linkList.innerHTML = '';
    if (list.length > 0) {
-      const numberofPages = (list.length / itemsPerPage) + 1; //index starts at 1
+      const numberofPages = Math.ceil(list.length / itemsPerPage);
       for (let i = 1; i <= numberofPages; i++) {
          linkList.insertAdjacentHTML('beforeend', `
             <li>
