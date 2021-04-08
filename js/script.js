@@ -124,10 +124,15 @@ function showSearchResults(searchInput) {
          `
       }
    } else {
-      showPage(data, 1);
-      addPagination(data);
+      showDefaultStudentList();
    }
 }
+
+function showDefaultStudentList() {
+   showPage(data, 1);
+   addPagination(data);
+}
+
 searchButton.addEventListener('click', () => {
    showSearchResults(searchBar.value);
 })
@@ -137,5 +142,4 @@ searchBar.addEventListener('keyup', (event) => {
 })
 
 // Call functions
-showPage(data, 1);
-addPagination(data);
+showDefaultStudentList();
