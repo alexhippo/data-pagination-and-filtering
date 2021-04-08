@@ -5,6 +5,8 @@ Author: Alex Hipolito
 GitHub: @alexhippo
 */
 
+const studentList = document.querySelector('ul.student-list');
+
 /*
 `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
@@ -13,7 +15,6 @@ let itemsPerPage = 9;
 function showPage(list, page) {
    const startIndex = (page * itemsPerPage) - itemsPerPage;
    const endIndex = page * itemsPerPage;
-   const studentList = document.querySelector('ul.student-list');
    studentList.innerHTML = '';
 
    for (let i = 0; i < list.length; i++) {
@@ -118,7 +119,6 @@ function showSearchResults(searchInput) {
          addPagination(searchResults);
       } else {
          addPagination(searchResults);
-         const studentList = document.querySelector('ul.student-list');
          studentList.innerHTML = `
             <h1>Sorry, we couldn't find a student with that name. Please try a different search term.</h1>
          `
