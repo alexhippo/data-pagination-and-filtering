@@ -6,7 +6,7 @@ GitHub: @alexhippo
 */
 
 /*
-Create the `showPage` function
+`showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
 let itemsPerPage = 9;
@@ -35,8 +35,9 @@ function showPage(list, page) {
 }
 
 const linkList = document.querySelector('ul.link-list');
+
 /*
-Create the `addPagination` function
+`addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
 function addPagination(list) {
@@ -58,7 +59,7 @@ function addPagination(list) {
 linkList.addEventListener('click', (event) => {
    if (event.target.tagName === 'BUTTON') {
       const clickedButton = event.target;
-      //remove the 'active' class from any other button in the linkList
+
       for (let listItem of linkList.children) {
          let button = listItem.firstElementChild;
          button.classList.remove('active');
@@ -75,9 +76,7 @@ linkList.addEventListener('click', (event) => {
 })
 
 /*
-Create the Search component
-This will allow the user to search/filter students in the database based on name
-If no results are found, a "No search results" style message is displayed on the page to the user.
+Search component
 */
 const header = document.querySelector('header');
 header.insertAdjacentHTML('beforeend', `
@@ -88,6 +87,10 @@ header.insertAdjacentHTML('beforeend', `
    </label>
 `);
 
+/*
+`searchStudents` function
+This function will search for students based off the searchInput and return the search results
+*/
 function searchStudents(searchInput, students) {
    let searchResults = [];
    for (let i = 0; i < students.length; i++) {
@@ -102,9 +105,13 @@ function searchStudents(searchInput, students) {
 const searchBar = document.querySelector('#search');
 const searchButton = searchBar.nextElementSibling;
 
-//@todo: Refactoring here
-searchButton.addEventListener('click', (event) => {
-   if (searchBar.value) {
+/*
+`showSearchResults` function
+This will display and paginate the results returned by searchStudents() in the student list
+If there is no searchInput (e.g. search term was cleared by the user), the full student list will be displayed by default
+*/
+function showSearchResults(searchInput) {
+   if (searchInput) {
       const searchResults = searchStudents(searchBar.value, data);
       if (searchResults.length > 0) {
          showPage(searchResults, 1);
@@ -120,29 +127,15 @@ searchButton.addEventListener('click', (event) => {
       showPage(data, 1);
       addPagination(data);
    }
+}
+searchButton.addEventListener('click', () => {
+   showSearchResults(searchBar.value);
 })
 
 searchBar.addEventListener('keyup', (event) => {
-   if (event.target.value) {
-      const searchResults = searchStudents(searchBar.value, data);
-      if (searchResults.length > 0) {
-         showPage(searchResults, 1);
-         addPagination(searchResults);
-      } else {
-         addPagination(searchResults);
-         const studentList = document.querySelector('ul.student-list');
-         studentList.innerHTML = `
-            <h1>Sorry, we couldn't find a student with that name. Please try a different search term.</h1>
-         `
-      }
-   } else {
-      showPage(data, 1);
-      addPagination(data);
-   }
+   showSearchResults(event.target.value);
 })
 
 // Call functions
-window.addEventListener('DOMContentLoaded', () => {
-   showPage(data, 1);
-   addPagination(data);
-})
+showPage(data, 1);
+addPagination(data);
