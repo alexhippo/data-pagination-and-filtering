@@ -20,11 +20,12 @@ function showPage(list, page) {
 
    for (let i = 0; i < list.length; i++) {
       if (i >= startIndex && i < endIndex) {
+         const studentName = `${list[i].name.first} ${list[i].name.last}`
          studentList.insertAdjacentHTML('beforeend', `
             <li class="student-item cf">
                <div class="student-details">
-                  <img class="avatar" src=${list[i].picture.large} alt="Profile Picture of ${list[i].name.first} ${list[i].name.last}">
-                  <h3>${list[i].name.first} ${list[i].name.last}</h3>
+                  <img class="avatar" src=${list[i].picture.large} alt="Profile Picture of ${studentName}">
+                  <h3>${studentName}</h3>
                   <span class="email">${list[i].email}</span>
                </div>
                <div class="joined-details">
@@ -34,10 +35,10 @@ function showPage(list, page) {
          `)
       }
    }
-}
+};
 
 /*
-Search component
+Append Search component to the Header
 */
 const header = document.querySelector('header');
 header.insertAdjacentHTML('beforeend', `
@@ -55,13 +56,14 @@ This function will search for students based off the searchInput and return the 
 function searchStudents(searchInput, students) {
    let searchResults = [];
    for (let i = 0; i < students.length; i++) {
-      if ((searchInput.length !== 0) &&
-         ((students[i].name.first.toLowerCase().includes(searchInput.toLowerCase())) || (students[i].name.last.toLowerCase().includes(searchInput.toLowerCase())))) {
+      if ((searchInput) &&
+         (students[i].name.first.toLowerCase().includes(searchInput.toLowerCase()) ||
+            students[i].name.last.toLowerCase().includes(searchInput.toLowerCase()))) {
          searchResults.push(students[i]);
       }
    }
    return searchResults;
-}
+};
 
 const searchBar = document.querySelector('#search');
 const searchButton = searchBar.nextElementSibling;
@@ -78,28 +80,30 @@ function showSearchResults(searchInput) {
          showPage(searchResults, 1);
          addPagination(searchResults);
       } else {
-         addPagination(searchResults);
          studentList.innerHTML = `
-            <h1>Sorry, we couldn't find a student with that name. Please try a different search term.</h1>
+            <div>
+               <h1>Sorry, we couldn't find a student with that name. Please check your spelling or try a different name.</h1>
+            </div>
          `
+         addPagination(searchResults);
       }
    } else {
       showDefaultStudentList();
    }
-}
+};
 
 function showDefaultStudentList() {
    showPage(data, 1);
    addPagination(data);
-}
+};
 
 searchButton.addEventListener('click', () => {
    showSearchResults(searchBar.value);
-})
+});
 
 searchBar.addEventListener('keyup', (event) => {
    showSearchResults(event.target.value);
-})
+});
 
 /*
 `addPagination` function
@@ -119,7 +123,7 @@ function addPagination(list) {
       const activeButton = linkList.firstElementChild.firstElementChild;
       activeButton.className = 'active';
    }
-}
+};
 
 linkList.addEventListener('click', (event) => {
    if (event.target.tagName === 'BUTTON') {
@@ -130,6 +134,7 @@ linkList.addEventListener('click', (event) => {
          button.classList.remove('active');
       }
       clickedButton.className = 'active';
+
       if (!searchBar.value) {
          showPage(data, clickedButton.textContent);
       } else {
@@ -137,6 +142,6 @@ linkList.addEventListener('click', (event) => {
          showPage(searchResults, clickedButton.textContent);
       }
    }
-})
+});
 
 showDefaultStudentList();

@@ -167,7 +167,7 @@ header h2 {
 	transition: 0.4s;
 }
 
-.pagination li button.active, .pagination li button:hover {
+.pagination li button.active, .pagination li button:hover, .pagination li button:focus {
   background-color: #1e90ff;
   color: #fff;
 }
