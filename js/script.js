@@ -6,6 +6,7 @@ GitHub: @alexhippo
 */
 
 const studentList = document.querySelector('ul.student-list');
+const linkList = document.querySelector('ul.link-list');
 
 /*
 `showPage` function
@@ -34,47 +35,6 @@ function showPage(list, page) {
       }
    }
 }
-
-const linkList = document.querySelector('ul.link-list');
-
-/*
-`addPagination` function
-This function will create and insert/append the elements needed for the pagination buttons
-*/
-function addPagination(list) {
-   linkList.innerHTML = '';
-   if (list.length > 0) {
-      const numberofPages = (list.length / itemsPerPage) + 1; //index starts at 1
-      for (let i = 1; i <= numberofPages; i++) {
-         linkList.insertAdjacentHTML('beforeend', `
-            <li>
-               <button type="button">${i}</button>
-            </li>
-         `);
-      }
-      const activeButton = linkList.firstElementChild.firstElementChild;
-      activeButton.className = 'active';
-   }
-}
-
-linkList.addEventListener('click', (event) => {
-   if (event.target.tagName === 'BUTTON') {
-      const clickedButton = event.target;
-
-      for (let listItem of linkList.children) {
-         let button = listItem.firstElementChild;
-         button.classList.remove('active');
-      }
-      clickedButton.className = 'active';
-      if (!searchBar.value) {
-         showPage(data, clickedButton.textContent);
-      } else {
-         //@todo: Can this call be avoided?
-         const searchResults = searchStudents(searchBar.value, data);
-         showPage(searchResults, clickedButton.textContent);
-      }
-   }
-})
 
 /*
 Search component
@@ -141,5 +101,42 @@ searchBar.addEventListener('keyup', (event) => {
    showSearchResults(event.target.value);
 })
 
-// Call functions
+/*
+`addPagination` function
+This function will create and insert/append the elements needed for the pagination buttons
+*/
+function addPagination(list) {
+   linkList.innerHTML = '';
+   if (list.length > 0) {
+      const numberofPages = (list.length / itemsPerPage) + 1; //index starts at 1
+      for (let i = 1; i <= numberofPages; i++) {
+         linkList.insertAdjacentHTML('beforeend', `
+            <li>
+               <button type="button">${i}</button>
+            </li>
+         `);
+      }
+      const activeButton = linkList.firstElementChild.firstElementChild;
+      activeButton.className = 'active';
+   }
+}
+
+linkList.addEventListener('click', (event) => {
+   if (event.target.tagName === 'BUTTON') {
+      const clickedButton = event.target;
+
+      for (let listItem of linkList.children) {
+         let button = listItem.firstElementChild;
+         button.classList.remove('active');
+      }
+      clickedButton.className = 'active';
+      if (!searchBar.value) {
+         showPage(data, clickedButton.textContent);
+      } else {
+         const searchResults = searchStudents(searchBar.value, data);
+         showPage(searchResults, clickedButton.textContent);
+      }
+   }
+})
+
 showDefaultStudentList();
