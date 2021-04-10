@@ -89,6 +89,11 @@ function showSearchResults(searchInput) {
          `
          addPagination(searchResults);
       }
+      linkList.addEventListener('click', (event) => {
+         if (event.target.tagName === 'BUTTON') {
+            showPage(searchResults, event.target.textContent);
+         }
+      })
    } else {
       showDefaultStudentList();
    }
@@ -135,18 +140,10 @@ function addPagination(list) {
             button.classList.remove('active');
          }
          clickedButton.className = 'active';
-
-         if (!searchBar.value) {
-            showPage(data, clickedButton.textContent);
-         } else {
-            const searchResults = searchStudents(searchBar.value, data);
-            showPage(searchResults, clickedButton.textContent);
-         }
+         showPage(data, clickedButton.textContent);
       }
    });
 };
-
-
 
 //Call functions - initialise page
 showDefaultStudentList();
