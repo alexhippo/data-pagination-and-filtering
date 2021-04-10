@@ -125,26 +125,28 @@ function addPagination(list) {
       const activeButton = linkList.firstElementChild.firstElementChild;
       activeButton.className = 'active';
    }
+
+   linkList.addEventListener('click', (event) => {
+      if (event.target.tagName === 'BUTTON') {
+         const clickedButton = event.target;
+
+         for (let listItem of linkList.children) {
+            let button = listItem.firstElementChild;
+            button.classList.remove('active');
+         }
+         clickedButton.className = 'active';
+
+         if (!searchBar.value) {
+            showPage(data, clickedButton.textContent);
+         } else {
+            const searchResults = searchStudents(searchBar.value, data);
+            showPage(searchResults, clickedButton.textContent);
+         }
+      }
+   });
 };
 
-linkList.addEventListener('click', (event) => {
-   if (event.target.tagName === 'BUTTON') {
-      const clickedButton = event.target;
 
-      for (let listItem of linkList.children) {
-         let button = listItem.firstElementChild;
-         button.classList.remove('active');
-      }
-      clickedButton.className = 'active';
-
-      if (!searchBar.value) {
-         showPage(data, clickedButton.textContent);
-      } else {
-         const searchResults = searchStudents(searchBar.value, data);
-         showPage(searchResults, clickedButton.textContent);
-      }
-   }
-});
 
 //Call functions - initialise page
 showDefaultStudentList();
