@@ -29,7 +29,7 @@ function showPage(list, page) {
                   <span class="email">${list[i].email}</span>
                </div>
                <div class="joined-details">
-                  <span class="date">${list[i].registered.date}</span>
+                  <span class="date">Joined ${list[i].registered.date}</span>
                </div>
             </li>
          `)
