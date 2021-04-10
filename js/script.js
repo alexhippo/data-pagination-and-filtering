@@ -7,12 +7,12 @@ GitHub: @alexhippo
 
 const studentList = document.querySelector('ul.student-list');
 const linkList = document.querySelector('ul.link-list');
+const itemsPerPage = 9;
 
 /*
 `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
-let itemsPerPage = 9;
 function showPage(list, page) {
    const startIndex = (page * itemsPerPage) - itemsPerPage;
    const endIndex = page * itemsPerPage;
