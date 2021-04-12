@@ -1,8 +1,8 @@
 /*
-Treehouse Techdegree:
-FSJS Project 2 - Data Pagination and Filtering
-Author: Alex Hipolito
-GitHub: @alexhippo
+* Treehouse Techdegree:
+* FSJS Project 2 - Data Pagination and Filtering
+* Author: Alex Hipolito
+* GitHub: @alexhippo
 */
 
 const studentList = document.querySelector('ul.student-list');
@@ -10,8 +10,10 @@ const linkList = document.querySelector('ul.link-list');
 const itemsPerPage = 9;
 
 /*
-`showPage` function
-This function will create and insert/append the elements needed to display a "page" of nine students
+* `showPage` function
+* This function will create and insert/append the elements needed to display a "page" of nine students
+* list - an Array of objects representing student data e.g. `data`, `searchResults`
+* page - an Integer that indicates the page number
 */
 function showPage(list, page) {
    const startIndex = (page * itemsPerPage) - itemsPerPage;
@@ -37,9 +39,7 @@ function showPage(list, page) {
    }
 };
 
-/*
-Append Search component to the Header
-*/
+//Append Search component to the header
 const header = document.querySelector('header');
 const searchComponent = `
    <label for="search" class="student-search">
@@ -54,8 +54,10 @@ const searchBar = document.querySelector('#search');
 const searchButton = searchBar.nextElementSibling;
 
 /*
-`searchStudents` function
-This function will search for students based off the searchInput and return the search results
+* `searchStudents` function
+* This function will search for students based off the searchInput and return the search results
+* searchInput - the user's search term
+* students - an Array of objects representing student data e.g. `data`
 */
 function searchStudents(searchInput, students) {
    let searchResults = [];
@@ -70,10 +72,11 @@ function searchStudents(searchInput, students) {
 };
 
 /*
-`showSearchResults` function
-This will display and paginate the results returned by searchStudents() in the student list
-If there are no search results, a "No results found" style message will be displayed
-If there is no searchInput (e.g. search was cleared by the user), the full student list will be displayed by default
+* `showSearchResults` function
+* This will display and paginate the results returned by `searchStudents()` in the student list
+* If there are no search results, a "No results found" style message will be displayed
+* If there is no searchInput (e.g. search was cleared by the user), the full student list will be displayed by default
+* searchInput - the user's search term
 */
 function showSearchResults(searchInput) {
    if (searchInput) {
@@ -113,8 +116,9 @@ searchBar.addEventListener('keyup', (event) => {
 });
 
 /*
-`addPagination` function
-This function will create and insert/append the elements needed for the pagination buttons
+* `addPagination` function
+* This function will create and insert/append the elements needed for the pagination buttons
+* list - an Array of objects representing student data e.g. `data`, `searchResults`
 */
 function addPagination(list) {
    linkList.innerHTML = '';
