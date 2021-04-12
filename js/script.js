@@ -80,7 +80,7 @@ function searchStudents(searchInput, students) {
 */
 function showSearchResults(searchInput) {
    if (searchInput) {
-      const searchResults = searchStudents(searchBar.value, data);
+      const searchResults = searchStudents(searchInput, data);
       if (searchResults.length > 0) {
          showPage(searchResults, 1);
          addPagination(searchResults);
